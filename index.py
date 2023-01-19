@@ -131,7 +131,7 @@ def uploadMeesho():
                     page.cropbox.lower_right = new_lowerRight
                     output.add_page(page)
 
-                with open(os.path.join(app.config.get('upload_folder'),  userid +"_output_"pdf_name), "wb") as out_f:
+                with open(os.path.join(app.config.get('upload_folder'), userid +"_output_"+pdf_name), "wb") as out_f:
                     output.write(out_f)
 
             if os.path.exists(os.path.join(app.config.get('upload_folder'), pdf_name)):

@@ -70,7 +70,7 @@ def upload():
                 numPages = len(input1.pages)
                 if (req['type']=="Meesho"): #Meesho
                       x, y, w, h = (5,5,582,590)
-                elif req['type']=="Flipkart": #Flipkart
+                elif (req['type']=="Flipkart"): #Flipkart
                      x, y, w, h = (170, 23,255, 350)
                 else:
                     return Response(json.dumps({'status': True,'code': 417,'message': 'Type not defined'}), mimetype='application/json') # PDF cropped and created

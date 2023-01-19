@@ -1,0 +1,66 @@
+404 - File Not found on the server
+503 - Something went wrong while cropping and making new PDF
+200 - All Okay
+
+API Documentataion:
+
+1) PDF PROCESSING REQUET
+ 
+    URL:   https://cropbox.onrender.com/upload
+    TYPE: POST
+    INPUT:
+    (multipart/form-data)
+
+    name="filename" =======> value = __filename__.pdf
+    name="type"  ====> value = Meesho / Flipkart
+   
+    (USe html form & Dropdown to upload file and select type on frontend)
+
+    RESPONSE:
+
+    ON SUCCESS:
+    {
+        "status": true,
+        "code": 200,
+        "message": "Processed",
+        "filename": "__PROCESSED-FILENAME__.pdf"
+    }
+
+    ON FAILURE:
+    {'status': True,'code': 503,'message': 'Something Went Wring! Please Try Again Later'}
+
+2) PDF GETTING REQUET
+ 
+    URL:   https://cropbox.onrender.com/get-pdf
+    TYPE: POST
+
+    INPUT: (same name as above API responded)
+    {
+        "filename":"__PROCESSED-FILENAME__.pdf" 
+    }
+
+    RESPONSE:
+
+    ON SUCCESS:
+    __PROCESSED-FILENAME__.pdf (Entire file as response)
+
+    ON FAILURE:
+    {'status': True,'code': 503,'message': 'Something Went Wring! Please Try Again Later'}
+
+3) DELETE GENERATED FILE (Necessary Because it cerated loads on server)
+
+    URL:   https://cropbox.onrender.com/delete
+    TYPE: POST
+
+    INPUT: (same name as above 1st API responded)
+    {
+        "filename":"__PROCESSED-FILENAME__.pdf" 
+    }
+
+    RESPONSE:
+
+    ON SUCCESS:
+    {"status": True,"code": 200,"message": "Deleted!"}
+
+    ON FAILURE:
+    {"status": True,"code": 404,"message": "File not found!"}

@@ -55,7 +55,7 @@ def upload():
 
         try:
 
-            pdf_file = request.files['file']
+            pdf_file = request.files['filename']
             pdf_name = pdf_file.filename
             save_path = os.path.join(app.config.get('upload_folder'),pdf_name)
             pdf_file.save(save_path)

@@ -56,6 +56,9 @@ def uploadFlipkart():
 
         try:
 
+            req  = json.loads(request.data)
+            userid = req["userid"]
+
             pdf_file = request.files['filename']
             pdf_name = pdf_file.filename
             save_path = os.path.join(app.config.get('upload_folder'),pdf_name)
@@ -82,7 +85,7 @@ def uploadFlipkart():
                     page.cropbox.lower_right = new_lowerRight
                     output.add_page(page)
 
-                with open(os.path.join(app.config.get('upload_folder'), "output_"+pdf_name), "wb") as out_f:
+                with open(os.path.join(app.config.get('upload_folder'), userid +"_output_"+pdf_name), "wb") as out_f:
                     output.write(out_f)
 
             if os.path.exists(os.path.join(app.config.get('upload_folder'), pdf_name)):
@@ -100,6 +103,8 @@ def uploadMeesho():
 
         try:
 
+            req  = json.loads(request.data)
+            userid = req["userid"]
             pdf_file = request.files['filename']
             pdf_name = pdf_file.filename
             save_path = os.path.join(app.config.get('upload_folder'),pdf_name)
@@ -126,7 +131,7 @@ def uploadMeesho():
                     page.cropbox.lower_right = new_lowerRight
                     output.add_page(page)
 
-                with open(os.path.join(app.config.get('upload_folder'), "output_"+pdf_name), "wb") as out_f:
+                with open(os.path.join(app.config.get('upload_folder'),  userid +"_output_"pdf_name), "wb") as out_f:
                     output.write(out_f)
 
             if os.path.exists(os.path.join(app.config.get('upload_folder'), pdf_name)):

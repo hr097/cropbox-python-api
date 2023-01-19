@@ -1,57 +1,58 @@
 import os
 import shutil
 import json
-from flask import Flask, abort, jsonify, request, flash, redirect, Response,send_file,send_from_directory
+from flask import Flask, abort, jsonify, render_template, request, flash, redirect, Response,send_file,send_from_directory
 from pathlib import Path
 from PyPDF2 import PdfWriter, PdfReader
 
+try:
+    #Configuration of Application
+    app = Flask(__name__)
+    path = os.path.dirname(os.path.abspath(__file__))
+    upload_folder=os.path.join(path.replace("/file_folder",""),"tmp") #creating sample/temporary directory
+    os.makedirs(upload_folder, exist_ok=True)
+    app.config['upload_folder'] = upload_folder #configuring it for global use
+
+except Exception as e:
+        app.logger.info("An error occurred while creating temp folder")
+        app.logger.error("Exception occurred : {}".format(e))
+       
 
 
-app = Flask(__name__)
 
-path = os.path.dirname(os.path.abspath(__file__))
-upload_folder=os.path.join(path.replace("/file_folder",""),"tmp")
-os.makedirs(upload_folder, exist_ok=True)
-app.config['upload_folder'] = upload_folder
-
-        
+#Default Route    
 @app.route('/', methods=['POST','GET'])
-def index():
-     return Response(json.dumps({'Message':'Not for public use!'}), mimetype='application/json') #something went wrong while cropping and making new PDF
-
+def index():                                
+    return render_template("index.html")
 
 
 @app.route('/get-pdf',methods = ['POST'])
 def get_pdf():
 
-    try:
-        req = json.loads(request.data)
-        #return Response(json.dumps(r['filename']), mimetype='application/json') #something went wrong while cropping and making new PDF
-        return send_from_directory(app.config.get('upload_folder'), req['filename'], as_attachment=True,mimetype='application/pdf')
-    except FileNotFoundError:
-        abort(404)
+    req = json.loads(request.data)
+    if os.path.exists(os.path.join(app.config.get('upload_folder'), req['filename'])): # if filename exists then return it
+            return send_from_directory(app.config.get('upload_folder'), req['filename'], as_attachment=True,mimetype='application/pdf')        
+    else:
+            return Response(json.dumps({"status": True,"code": 404,"message": "File not found!"}), mimetype='application/json') #If file not exists
+
    
-    
 
 @app.route('/delete',methods = ['POST'])
 def delete_file():
 
-            req  = json.loads(request.data)
-            filename = req['filename']
-            try:
-                if os.path.exists(os.path.join(app.config.get('upload_folder'), filename)):
-                        os.remove(os.path.join(app.config.get('upload_folder'), filename))
-                        return Response(json.dumps({"status": True,"code": 200,"message": "Deleted!"}), mimetype="application/json")
-                else:
-                    return Response(json.dumps({"status": True,"code": 200,"message": "Not Exists!"}), mimetype="application/json")     
-            except FileNotFoundError:
-                return Response(json.dumps({"status": True,"code": 200,"message": "Error-code:500"}), mimetype="application/json") #unable to delete file
-                # abort(404)
-        
+    req  = json.loads(request.data)
+    filename = req['filename']
+
+    if os.path.exists(os.path.join(app.config.get('upload_folder'), filename)): #if file exists then delete it
+                os.remove(os.path.join(app.config.get('upload_folder'), filename))
+                return Response(json.dumps({"status": True,"code": 200,"message": "Deleted!"}), mimetype="application/json")
+    else:
+            return Response(json.dumps({"status": True,"code": 404,"message": "File not found!"}), mimetype="application/json")     
+
+
 @app.route('/upload', methods=['POST'])
 def upload():
 
-    try:
 
         try:
 
@@ -80,8 +81,6 @@ def upload():
                     page.cropbox.lower_right = new_lowerRight
                     output.add_page(page)
 
-                   # print(os.path.join(app.config.get('upload_folder'), pdf_name))
-
                 with open(os.path.join(app.config.get('upload_folder'), "output_"+pdf_name), "wb") as out_f:
                     output.write(out_f)
 
@@ -92,17 +91,9 @@ def upload():
         
         except Exception as e:
             app.logger.info("error occurred")
-            return Response(json.dumps({'status': True,'code': 200,'message': 'Error-code:503'}), mimetype='application/json') #something went wrong while cropping and making new PDF
+            return Response(json.dumps({'status': True,'code': 503,'message': 'Something Went Wring! Please Try Again Later'}), mimetype='application/json') #something went wrong while cropping and making new PDF
     
 
-    except Exception as e:
-        app.logger.info("An error occurred while creating temp folder")
-        app.logger.error("Exception occurred : {}".format(e))
-        return Response(json.dumps({'status': True,'code': 200,'message': 'Error-code:417'}), mimetype='application/json') # unable to create temp folder
-
-
-    
-     
 # main method
 if __name__ == "__main__":
     app.run()

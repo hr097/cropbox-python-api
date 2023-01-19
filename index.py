@@ -7,7 +7,7 @@ from PyPDF2 import PdfWriter, PdfReader
 
 try:
     #Configuration of Application
-    app = Flask(__name__)
+    app = Flask(__name__,template_folder='template')
     path = os.path.dirname(os.path.abspath(__file__))
     upload_folder=os.path.join(path.replace("/file_folder",""),"tmp") #creating sample/temporary directory
     os.makedirs(upload_folder, exist_ok=True)
@@ -21,9 +21,10 @@ except Exception as e:
 
 
 #Default Route    
-@app.route('/', methods=['POST','GET'])
+@app.route('/')
 def index():                                
     return render_template("index.html")
+    #return Response(json.dumps({"status": True,"code": 404,"message": path}), mimetype='application/json')
 
 
 @app.route('/get-pdf',methods = ['POST'])
@@ -55,9 +56,7 @@ def delete_file():
 def uploadFlipkart():
 
         try:
-
-            req  = json.loads(request.form)
-            userid = req["userid"]
+            userid = request.form["userid"]
 
             pdf_file = request.files['filename']
             pdf_name = pdf_file.filename
@@ -91,7 +90,7 @@ def uploadFlipkart():
             if os.path.exists(os.path.join(app.config.get('upload_folder'), pdf_name)):
                         os.remove(os.path.join(app.config.get('upload_folder'), pdf_name))
 
-            return Response(json.dumps({'status': True,'code': 200,'message': 'Processed','filename':"output_"+pdf_name}), mimetype='application/json') # PDF cropped and created
+            return Response(json.dumps({'status': True,'code': 200,'message': 'Processed','filename': userid +"_output_"+pdf_name}), mimetype='application/json') # PDF cropped and created
         
         except Exception as e:
             app.logger.info("error occurred")
@@ -101,10 +100,10 @@ def uploadFlipkart():
 @app.route('/upload-for-meesho', methods=['POST'])
 def uploadMeesho():
 
+        userid = request.form["userid"]
+
         try:
 
-            req  = json.loads(request.form)
-            userid = req["userid"]
             pdf_file = request.files['filename']
             pdf_name = pdf_file.filename
             save_path = os.path.join(app.config.get('upload_folder'),pdf_name)
@@ -137,11 +136,11 @@ def uploadMeesho():
             if os.path.exists(os.path.join(app.config.get('upload_folder'), pdf_name)):
                         os.remove(os.path.join(app.config.get('upload_folder'), pdf_name))
 
-            return Response(json.dumps({'status': True,'code': 200,'message': 'Processed','filename':"output_"+pdf_name}), mimetype='application/json') # PDF cropped and created
+            return Response(json.dumps({'status': True,'code': 200,'message': 'Processed','filename': userid +"_output_"+pdf_name}), mimetype='application/json') # PDF cropped and created
         
         except Exception as e:
             app.logger.info("error occurred")
-            return Response(json.dumps({'status': True,'code': 503,'message': 'Something Went Wring! Please Try Again Later'}), mimetype='application/json') #something went wrong while cropping and making new PDF
+            return Response(json.dumps({'status': True,'code': 503,'message': 'Something Went Wrong! Please Try Again Later'}), mimetype='application/json') #something went wrong while cropping and making new PDF
 
 
 # main method

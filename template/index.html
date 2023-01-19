@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CropBox | API</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="w3-content" style="max-width:1200px">
+
+<div class="w3-panel">
+  <i class="w3-xlarge fa fa-bars"></i>
+</div>
+<!-- First Grid: Logo & About -->
+<div class="w3-row">
+<div class="w3-half w3-container">
+    <h1> Developers:</h1>
+    <pre>
+    <b>Harshil Ramani</b>  
+    <a href="https://github.com/hr097"><i class="w3-xlarge fa fa-github"></i></a>    <a href="https://www.linkedin.com/in/harshil-ramani-2b528920b/"><i class="w3-xlarge fa fa-linkedin"></i></a>
+    <br>
+    <b>Shubham Khunt</b> 
+    <a href="https://github.com/ShubhamKhunt1872003"><i class="w3-xlarge fa fa-github"></i></a>    <a href="https://www.linkedin.com/in/shubham-khunt/"><i class="w3-xlarge fa fa-linkedin"></i></a>
+    </pre>
+</div>
+<div class="w3-half w3-container w3-xlarge w3-text-grey">
+ <code>
+    <!-- Footer -->
+    <div class="w3-row w3-section">
+    <div class="w3-third w3-container w3-black w3-large" style="height:250px;width:400px;">
+      <h2>Contact Info</h2>
+      <p><i class="fa fa-map-marker" style="width:30px"></i> India | Australia</p>
+      <p><i class="fa fa-phone" style="width:30px"></i> Email: harshilramani9777@gmail.com</p>
+      <p><i class="fa fa-envelope" style="width:30px"> </i> Email: ShubhamKhunt1872003@gmail.com</p>
+    </div>
+  </div>
+ </code>
+</div>
+</div>
+
+
+<div class="w3-row">
+
+<div class="w3-half w3-container">
+  
+  <p class="w3-xlarge w3-text-grey">
+    <pre>
+ <code>
+    API Documentataion:
+    <h1>Error Codes for API</h1><br>
+    404 - File Not found on the server<br>
+    503 - Something went wrong while cropping and making new PDF<br>
+    200 - All Okay<br>
+    <br><hr>
+    <b>1) PDF PROCESSING REQUET</b>
+
+    <b>URL 1:</b>   https://cropbox.onrender.com/upload-for-meesho
+    <b>URL 2:</b>   https://cropbox.onrender.com/upload-for-flipkart
+    <b>TYPE:</b>  POST
+    <b>INPUT:</b>
+
+    <b>(multipart/form-data)</b>
+    <b>name="filename" =======> value = filename.pdf</b>
+    <b>useid=003003(Random value)</b>
+
+    <b>RESPONSE:</b>
+
+    <b>ON SUCCESS:</b>
+    {
+        "status": true,
+        "code": 200,
+        "message": "Processed",
+        "filename": "PROCESSED-FILENAME.pdf"
+    }
+
+    <b>ON FAILURE:</b>
+    {'status': True,'code': 503,'message': 'Something Went Wring! Please Try Again Later'}
+
+<b>2) PDF GETTING REQUET</b>
+ 
+    <b>URL:   https://cropbox.onrender.com/get-pdf</b>
+    <b>TYPE: POST</b>
+
+    INPUT: (same name as above API responded)
+    {
+        "filename":"PROCESSED-FILENAME.pdf" 
+    }
+
+    <b>RESPONSE:</b>
+
+
+    <b>ON SUCCESS:</b>
+    PROCESSED-FILENAME.pdf (Entire file as response)
+
+    <b>ON FAILURE:</b>
+    {'status': True,'code': 503,'message': 'Something Went Wring! Please Try Again Later'}
+
+<b>3) DELETE GENERATED FILE (Necessary Because it cerated loads on server)</b>
+
+    <b>URL:   https://cropbox.onrender.com/delete</b>
+    <b>TYPE: POST</b>
+
+    INPUT: (same name as above 1st API responded)
+    {
+        "filename":"PROCESSED-FILENAME.pdf" 
+    }
+
+    <b>RESPONSE:</b>
+
+    <b>ON SUCCESS:</b>
+    {"status": True,"code": 200,"message": "Deleted!"}
+
+    <b>ON FAILURE:</b>
+    {"status": True,"code": 404,"message": "File not found!"}
+ </code>
+</pre>
+</div>
+</div>
+
+<div class="w3-container w3-text-grey">
+  <p>Powered by <a href="" target="_blank">Harshil & Shubham</a></p>
+</div>
+
+</body>
+</html>

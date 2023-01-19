@@ -56,7 +56,7 @@ def uploadFlipkart():
 
         try:
 
-            req  = json.loads(request.data)
+            req  = json.loads(request.form)
             userid = req["userid"]
 
             pdf_file = request.files['filename']
@@ -103,7 +103,7 @@ def uploadMeesho():
 
         try:
 
-            req  = json.loads(request.data)
+            req  = json.loads(request.form)
             userid = req["userid"]
             pdf_file = request.files['filename']
             pdf_name = pdf_file.filename

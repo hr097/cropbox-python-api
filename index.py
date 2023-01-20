@@ -18,7 +18,7 @@ try:
 except Exception as e:
         app.logger.info("An error occurred while creating temp folder")
         app.logger.error("Exception occurred : {}".format(e))
-       
+
 
 
 
@@ -31,14 +31,11 @@ def index():
 
 @app.route('/get-pdf',methods = ['POST'])
 def get_pdf():
-
     req = json.loads(request.data)
     if os.path.exists(os.path.join(app.config.get('upload_folder'), req['filename'])): # if filename exists then return it
-            return send_from_directory(app.config.get('upload_folder'), req['filename'], as_attachment=True,mimetype='application/pdf')        
+        return send_from_directory(app.config.get('upload_folder'), req['filename'], as_attachment=True,mimetype='application/pdf')        
     else:
-            return Response(json.dumps({"status": True,"code": 404,"message": "File not found!"}), mimetype='application/json') #If file not exists
-
-   
+        return Response(json.dumps({"status": True,"code": 404,"message": "File not found!"}), mimetype='application/json') #If file not exists
 
 @app.route('/delete',methods = ['POST'])
 def delete_file():
@@ -100,10 +97,9 @@ def uploadFlipkart():
 
 
 @app.route('/upload-for-meesho', methods=['POST'])
+@cross_origin()
 def uploadMeesho():
-
         userid = request.form["userid"]
-
         try:
 
             pdf_file = request.files['filename']

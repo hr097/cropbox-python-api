@@ -4,6 +4,7 @@ import json
 from flask import Flask, abort, jsonify, render_template, request, flash, redirect, Response,send_file,send_from_directory
 from pathlib import Path
 from PyPDF2 import PdfWriter, PdfReader
+from flask_cors import cross_origin
 
 try:
     #Configuration of Application
@@ -98,6 +99,7 @@ def uploadFlipkart():
 
 
 @app.route('/upload-for-meesho', methods=['POST'])
+@cross_origin()
 def uploadMeesho():
 
         userid = request.form["userid"]

@@ -4,12 +4,12 @@ import json
 from flask import Flask, abort, jsonify, render_template, request, flash, redirect, Response,send_file,send_from_directory
 from pathlib import Path
 from PyPDF2 import PdfWriter, PdfReader
-from flask_cors import cross_origin
+from flask_cors import CORS
 
 try:
     #Configuration of Application
     app = Flask(__name__,template_folder='template')
-    cross_origin(app)
+    CORS(app)
     path = os.path.dirname(os.path.abspath(__file__))
     upload_folder=os.path.join(path.replace("/file_folder",""),"tmp") #creating sample/temporary directory
     os.makedirs(upload_folder, exist_ok=True)
@@ -97,7 +97,6 @@ def uploadFlipkart():
 
 
 @app.route('/upload-for-meesho', methods=['POST'])
-@cross_origin()
 def uploadMeesho():
         userid = request.form["userid"]
         try:

@@ -9,6 +9,7 @@ from flask_cors import cross_origin
 try:
     #Configuration of Application
     app = Flask(__name__,template_folder='template')
+    cross_origin(app)
     path = os.path.dirname(os.path.abspath(__file__))
     upload_folder=os.path.join(path.replace("/file_folder",""),"tmp") #creating sample/temporary directory
     os.makedirs(upload_folder, exist_ok=True)
@@ -99,7 +100,6 @@ def uploadFlipkart():
 
 
 @app.route('/upload-for-meesho', methods=['POST'])
-@cross_origin()
 def uploadMeesho():
 
         userid = request.form["userid"]

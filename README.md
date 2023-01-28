@@ -10,9 +10,9 @@
     <br />
   </p>
   <br>
-   <a  href="https://cropbox.onrender.com" target="_blank" >View API Demo</a>
-  <br>
-  <a  href="https://cropbox.vercel.app" target="_blank" >View Application Demo</a>
+   <a  href="https://cropbox.onrender.com" target="_blank" rel="noopener noreferrer" >View API Demo</a>
+  <br><br>
+  <a  href="https://cropbox.vercel.app" target="_blank" rel="noopener noreferrer" >View Application Demo</a>
 </div>
 
 <br>

@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="cropbox.png" alt="Logo" width="190" height="100">
+    <img src="cropbox_logo.png" alt="CropBox Logo" width="190" height="180">
   </a>
 
   <h3 align="center">CropBox</h3>
@@ -9,9 +9,15 @@
    Best PDF Cropping Tool For Online Resellers of Flipkart & Meesho
     <br />
   </p>
-  <a  href="https://cropbox.vercel.app" target="blank" >View Demo</a>
+  <br>
+   <a  href="https://cropbox.onrender.com" target="_blank" rel="noopener noreferrer" >View API Demo</a>
+  <br><br>
+  <a  href="https://cropbox.vercel.app" target="_blank" rel="noopener noreferrer" >View Application Demo</a>
 </div>
 
+<br>
+<br>
+  <h3 align="center">Tools and Technologies</h3>
 <br>
 <br>
 

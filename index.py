@@ -69,7 +69,9 @@ def uploadFlipkart():
 
                 numPages = len(input1.pages)
 
-                x, y, w, h = (170, 23,255, 350)
+                # x, y, w, h = (170, 23,255, 350) #! version 1.0
+                x, y, w, h = (185, 23,225, 360) #? version 2.0
+
 
                 page_x= input1.pages[0].cropbox.left
                 page_y= input1.pages[0].cropbox.top 
